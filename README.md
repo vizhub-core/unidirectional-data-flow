@@ -38,5 +38,35 @@ app.hotReload((container, { state, setState }) => {
 });
 ```
 
+### State Management
+
+The library provides a simple yet powerful state management system through the `state` and `setState` parameters passed to your main function:
+
+**`state`**
+
+The `state` object contains the current application state. It starts as an empty object (`{}`) and can be updated through the `setState` function. This state is preserved across renders and even during hot reloads, making it ideal for maintaining application data.
+
+**`setState`**
+
+The `setState` function allows you to update the application state. Conceptually, it's similar to React's `useState` hook (like `const [state, setState] = useState({})`), but with a slightly different API:
+
+```js
+// Update state with a function that receives the previous state
+setState((prevState) => ({
+  ...prevState,
+  count: prevState.count + 1
+}));
+```
+
+The `setState` function:
+- Takes a function as its argument
+- This function receives the current state and must return the new state
+- After state is updated, the main function is automatically re-rendered
+- Any cleanup function returned by the previous render is called before re-rendering
+
+This pattern ensures predictable state updates and maintains the unidirectional data flow, where:
+1. State changes trigger renders
+2. Renders reflect the current state
+3. User interactions trigger state changes
 
 See also [d3-rosetta](https://github.com/curran/d3-rosetta).
